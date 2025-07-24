@@ -1,0 +1,9 @@
+- perbaiki graphic biar ciamik
+- bikin Night Mode
+- bikin field input
+- bikin autoText lengkap
+
+3 pages
+- Homepage
+- Stockpage
+- comparepage

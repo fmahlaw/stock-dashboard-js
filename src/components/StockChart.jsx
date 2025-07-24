@@ -1,69 +1,37 @@
+import React from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
+  LineElement,
   CategoryScale,
   LinearScale,
   PointElement,
-  LineElement,
-  Title,
   Tooltip,
   Legend
 } from 'chart.js';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend);
 
-function StockChart({ symbol, data }) {
-  const labels = data.map(item => new Date(item.Date).toISOString().split('T')[0]);
-  const prices = data.map(item => item.Close);
-
+const StockChart = ({ symbol, data }) => {
   const chartData = {
-    labels,
+    labels: data.map(d => new Date(d.Date).toLocaleDateString()),
     datasets: [
       {
-        label: `${symbol} Close`,
-        data: prices,
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        fill: true,
-        pointRadius: 3,
-        tension: 0.3
+        label: symbol,
+        data: data.map(d => d.Close),
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.3,
+        fill: false
       }
     ]
   };
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: context => 'Rp ' + context.formattedValue
-        }
-      },
-      title: {
-        display: true,
-        text: `${symbol} Closing Prices`
-      }
-    },
-    scales: {
-      x: { title: { display: true, text: 'Date' } },
-      y: { title: { display: true, text: 'Closing Price (Rp)' } }
-    }
-  };
-
   return (
-    <div className="bg-white shadow rounded p-4">
-      <Line data={chartData} options={options} />
+    <div className="bg-white p-4 rounded shadow">
+      <h3 className="text-lg font-semibold mb-2">{symbol}</h3>
+      <Line data={chartData} />
     </div>
   );
-}
+};
 
 export default StockChart;
