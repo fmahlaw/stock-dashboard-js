@@ -38,6 +38,11 @@ const HomePage = () => {
           </button>
         </div>
       </div>
+      <div>
+      News
+      
+
+      </div>
     </div>
   );
 };
